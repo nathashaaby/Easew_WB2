@@ -162,7 +162,8 @@
   
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
       // Signed in 
-      const user = userCredential.user;
+      if((document.getElementById('phno').value.length)==10){
+        const user = userCredential.user;
       location.href="Cust Login.html"
       
       set(ref(database,'users/' + user.uid),{
@@ -171,6 +172,10 @@
         phno:document.getElementById('phno').value,
         address:document.getElementById('address').value
       })
+      }
+      else{
+        alert("Enter 10 digit number")
+      }
       alert('USER CREATED')
       // ...
 

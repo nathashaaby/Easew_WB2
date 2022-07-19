@@ -46,7 +46,7 @@
     <ul class="nav">
 
       <li class="nav-item">
-        <a class="nav-link" href="#" style="border-style: solid; border-radius: 25px; border-color: black;">HOME</a>
+        <a class="nav-link" href="Cust HomePage.html" style="border-style: solid; border-radius: 25px; border-color: black;">HOME</a>
       </li>
 
       <li class="nav-item">
@@ -66,7 +66,11 @@
         <a class="nav-link" href="Cust Login.html"
           style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
       </li>
+      <li class="nav-item">
+       <input type="text" id="user" style="border: 0; background-color: black; color: blue;">
+      </li>
     </ul>
+
   </nav>
 
   <div class="container">
@@ -87,6 +91,16 @@
         <h2 class="font-weight-bold mb-5" style="color: white;"><b>New Request</b></h2>
 
         <form>
+
+          <div class="form-row" style="padding-right: 10px;">
+
+            <div class="col">
+
+              <p style="color: white; font-size: 15px; font-weight: bold;">TITLE</p>
+
+              <input id="title" class="form-control mb-3" type="text" name="title">
+            </div>
+          </div>
           <div class="form-row" style="padding-right: 10px;">
 
             <div class="col">
@@ -97,11 +111,24 @@
 
                 <option selected>CHOOSE</option>
                 <option value="CASUAL">CASUAL</option>
-                <option value="OCCASSIONAL">OCCASSIONAL</option>
-                <option value="MEN'S">MEN'S</option>
-                <option value="WOMEN'S">WOMEN'S</option>
-                <option value="KID'S">KID'S</option>
-                <option value="UNIFORM">UNIFORM</option>
+                <option value="FORMAL">FORMAL</option>
+                <option value="FESTIVE">FESTIVE</option>
+             
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="padding-right: 10px;">
+
+            <div class="col">
+
+              <p style="color: white; font-size: 15px; font-weight: bold;">CATEGORY</p>
+
+              <select id="category" class="form-select form-select-lg mb-3">
+
+                <option selected>CHOOSE</option>
+                <option value="MEN">MEN</option>
+                <option value="WOMEN">WOMEN</option>
+                <option value="KIDS">KIDS</option>
               </select>
             </div>
           </div>
@@ -114,7 +141,7 @@
 
                 <p style="color: white; font-size: 15px; font-weight: bold;">DRESS DESCRIPTION</p>
 
-                <textarea class="form-control mb-3" id="details" placeholder="Describe yourself here..."></textarea>
+                <textarea class="form-control mb-3" id="details" placeholder="Describe about your outfit..."></textarea>
               </div>
             </div>
           </div>
@@ -145,7 +172,8 @@
 
               <p style="color: white; font-size: 15px; font-weight: bold;">IMAGES FOR REFERENCE</p>
 
-              <input class="form-control mb-3" type="file" name="reference">
+              <input id="file" class="form-control mb-3" type="file" name="reference">
+              <progress min="0" max="100" id="progress" value="0"></progress>
             </div>
           </div>
 
@@ -164,7 +192,34 @@
   </div>
   </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+  const Config = {
+    apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
+    authDomain: "easew-f8056.firebaseapp.com",
+    databaseURL: "https://easew-f8056-default-rtdb.firebaseio.com",
+    projectId: "easew-f8056",
+    storageBucket: "easew-f8056.appspot.com",
+    messagingSenderId: "677782385102",
+    appId: "1:677782385102:web:acb786b5badc3345d2bb9f",
+    measurementId: "G-JFNLZDG1HB"
+  };
+  firebase.initializeApp(Config);
+</script>
 
+<script type="text/javascript">
+  document.getElementById("file").addEventListener("change",(e)=>{
+    console.log(e);
+    var email=document.getElementById("user").value
+    var file=e.target.files[0];
+    var storageRef=firebase.storage().ref("Reference_images/"+email)
+    var task=storageRef.put(file)
+    task.on("state_changed",(s)=>{
+      console.log((s.bytesTransferred/s.totalBytes)*100);
+      document.getElementById("progress").value=(s.bytesTransferred/s.totalBytes)*100
+    })
+  })
+</script>
 <script type="module">
 
   $(document).ready(function () {
@@ -199,13 +254,16 @@
     if (user) {
       const uid = user.email;
       const uuid = user.uid
+      document.getElementById("user").value=uid
       request.addEventListener('click', (e) => {
         // Signed in
         set(ref(database, 'users/' + uuid), {
-          choose: document.getElementById('choose').value,
-          details: document.getElementById('details').value,
+          title: document.getElementById('title').value,
+          type: document.getElementById('choose').value,
+          category: document.getElementById('category').value,
+          dress_details: document.getElementById('details').value,
           rate: document.getElementById('rate').value,
-          date: document.getElementById('date').value,
+          expected_date: document.getElementById('date').value,
           email: uid
         })
         alert('Request Send')
