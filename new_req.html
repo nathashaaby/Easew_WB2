@@ -43,39 +43,41 @@
         <ul class="nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="Des HomePage.html"
-                    style="border-style: solid; border-radius: 25px; border-color: black;">HOME</a>
+              <a class="nav-link" href="./Des HomePage.html"
+                style="border-style: solid; border-radius: 25px; border-color: black;">HOME</a>
             </li>
+      
+            <li class="nav-item">
+                <a class="nav-link" href="./Des ReqPage.html" style="border-style: solid; border-radius: 25px; border-color: black;">VIEW REQUESTS</a>
+              </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="Des Reqs.html"
-                    style="border-style: solid; border-radius: 25px; border-color: black;">MY REQUESTS</a>
+              <a class="nav-link" href="./des_about.html" style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
             </li>
-
+      
             <li class="nav-item">
-                <a class="nav-link" href="#"
-                    style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
+              <a class="nav-link" href="./new_req.html" style="border-style: solid; border-radius: 25px; border-color: black;">SEARCH REQUESTS</a>
             </li>
-
+      
             <li class="nav-item">
-                <a class="nav-link" href="#"
-                    style="border-style: solid; border-radius: 25px; border-color: black;">CONTACT</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="Des Login.html"
-                    style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
-            </li>
-        </ul>
+                <a class="nav-link" href="#" id="signout" style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
+              </li>
+              <li class="nav-item">
+               <input type="text" id="user" style="border: 0; background-color: black; color: blue;">
+              </li>
+          </ul>
     </nav>
 
-    <div class="container" style="margin-top: 50px; background-color: grey; border-radius: 25px; opacity: 80%;">
+    <div class="container" style="margin-top: 50px; background-color: rgb(50, 48, 48); border-radius: 25px; opacity: 90%;">
 
         <div id="Row" class="row no-gutters text-center">
 
-            <div class="col">
+            <div class="col" style="background-color:rgb(50, 48, 48) ;">
 
                 <h2 style="color: white; letter-spacing: 25px; font-weight: bold;">REQUEST DETAILS</h2>
+                <h3 style="color:#fff ;">Search By Uid</h3>
+                        <input placeholder="Paste the uid here" type="text" id="uid">
+                        <button id="submit" type="button" class="btn btn-primary">Fetch Data</button>
             </div>
         </div>
         <h4 id="email"></h4>
@@ -87,27 +89,123 @@
                     <div class="card-body">
                     </div>
                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Email</li>
+                        <p id="email1"></p>
+                        <li class="list-group-item">Title</li>
+                        <input type="text" id="title">
                         <li class="list-group-item">Dress Type</li>
-                        <p> </p>
+                        <input type="text" id="type">
                         <li class="list-group-item">Category</li>
-                        <p></p>
+                        <input type="text" id="category">
                         <li class="list-group-item">Description</li>
-                        <p></p>
+                        <input type="text" id="dress_details">
                         <li class="list-group-item">Expeceted Rate</li>
-                        <p></p>
+                        <input type="text" id="rate">
                         <li class="list-group-item">Expected Date</li>
-                        <p></p>
+                        <input type="text" id="expected_date">
+                        <input type="text" style="display: none;" id="mail1">
+                        
+                       
                     </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                    </div>
+                    
                     <div class="" style="margin-left:auto; margin-right:auto; margin-bottom: 20px;">
-                        <button type="button" class="btn btn-success">Accept</button>
-                        <button type="button" class="btn btn-danger">Reject</button>
+                        <button id="accept" type="button" class="btn btn-success">Accept</button>
+                        
                     </div>
                 </div>
             </div>
     </div>
 </body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
+    import { getDatabase, set, ref,get,child } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+  
+    const firebaseConfig = {
+    apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
+    authDomain: "easew-f8056.firebaseapp.com",
+    databaseURL: "https://easew-f8056-default-rtdb.firebaseio.com",
+    projectId: "easew-f8056",
+    storageBucket: "easew-f8056.appspot.com",
+    messagingSenderId: "677782385102",
+    appId: "1:677782385102:web:acb786b5badc3345d2bb9f",
+    measurementId: "G-JFNLZDG1HB"
+  };
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        
+        const uid = user.email;
+        console.log(uid);
+      document.getElementById("mail1").value=uid
+       const dbRef = ref(getDatabase());
+       
+         
+          
+        // ...
+      } else {
+  
+      
+        alert('PLEASE SIGNUP TO SEND THE REQUEST')
+      }
+    });
+  
+  
+  
+  </script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+
+  //BE SURE TO PROTECT EVERYTHING IN THE CONFIG
+  //DON'T COMMIT IT!!!
+
+  // Initialize Firebase
+  const config = {
+    apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
+    authDomain: "easew-f8056.firebaseapp.com",
+    databaseURL: "https://easew-f8056-default-rtdb.firebaseio.com",
+    projectId: "easew-f8056",
+    storageBucket: "easew-f8056.appspot.com",
+    messagingSenderId: "677782385102",
+    appId: "1:677782385102:web:acb786b5badc3345d2bb9f",
+    measurementId: "G-JFNLZDG1HB"
+  };
+  firebase.initializeApp(config);
+
+  var uid = document.getElementById("uid").value
+  var firebaseRef=firebase.database().ref("users/"+uid)
+  function ready(){
+    uid1=document.getElementById("uid").value; 
+  }
+  document.getElementById("accept").onclick=  function(){
+    ready();
+    firebase.database().ref('users/'+uid1).update({
+        status:"accepted"
+    })
+    firebase.database().ref('users/'+uid1).update({
+        designer: document.getElementById("mail1").value
+    })
+    alert("The request has been accepted")
+    location.href="Des ReqPage.html"
+  } 
+  
+document.getElementById("submit").onclick = function(){
+    ready();
+    firebase.database().ref('users/'+uid1).on('value',function(snapshot){
+        var mail = snapshot.val().email
+        document.getElementById("email1").innerHTML= mail
+        document.getElementById("title").value=snapshot.val().title
+        document.getElementById("type").value=snapshot.val().type
+        document.getElementById("category").value=snapshot.val().category
+        document.getElementById("dress_details").value=snapshot.val().dress_details
+        document.getElementById("rate").value=snapshot.val().rate
+        document.getElementById("expected_date").value=snapshot.val().expected_date
+    })
+}
+</script>
 
 </html>

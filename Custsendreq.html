@@ -50,21 +50,16 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#" style="border-style: solid; border-radius: 25px; border-color: black;">MY
+        <a class="nav-link" href="./myreq.html" style="border-style: solid; border-radius: 25px; border-color: black;">MY
           REQUESTS</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#" style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
+        <a class="nav-link" href="./cus_about.html" style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#" style="border-style: solid; border-radius: 25px; border-color: black;">CONTACT</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="Cust Login.html"
-          style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
+        <a class="nav-link" href="#" id="signout" style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
       </li>
       <li class="nav-item">
        <input type="text" id="user" style="border: 0; background-color: black; color: blue;">
@@ -234,7 +229,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
   import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
@@ -264,7 +259,10 @@
           dress_details: document.getElementById('details').value,
           rate: document.getElementById('rate').value,
           expected_date: document.getElementById('date').value,
-          email: uid
+          email: uid,
+          status: "not accepted",
+          uid: uuid,
+          designer: "null"
         })
         alert('Request Send')
 
@@ -283,6 +281,17 @@
       alert('PLEASE SIGNUP TO SEND THE REQUEST')
     }
   });
+  signout.addEventListener('click',(e)=>{
+            signOut(auth).then(() => {
+            location.href = "Cust Login.html"
+        }).catch((error) => {
+            const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          alert(errorMessage)
+        });
+
+        })
 </script>
 
 </html>

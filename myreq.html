@@ -43,28 +43,26 @@
     <ul class="nav">
 
       <li class="nav-item">
-        <a class="nav-link" href="./Des HomePage.html"
+        <a class="nav-link" href="./Cust HomePage.html"
           style="border-style: solid; border-radius: 25px; border-color: black;">HOME</a>
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="./Des ReqPage.html" style="border-style: solid; border-radius: 25px; border-color: black;">VIEW REQUESTS</a>
-        </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="./des_about.html" style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
+        <a class="nav-link" href="./myreq.html"
+          style="border-style: solid; border-radius: 25px; border-color: black;">MY REQUESTS</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="./new_req.html" style="border-style: solid; border-radius: 25px; border-color: black;">SEARCH REQUESTS</a>
+        <a class="nav-link" href="./cus_about.html" style="border-style: solid; border-radius: 25px; border-color: black;">ABOUT</a>
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="#" id="signout" style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
-        </li>
-        <li class="nav-item">
-         <input type="text" id="user" style="border: 0; background-color: black; color: blue;">
-        </li>
+        <a id="signout" class="nav-link" href="#"
+          style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
+      </li>
+      <li class="nav-item">
+        <input type="text" id="user" style="border: 0; background-color: black; color: blue;">
+      </li>
     </ul>
   </nav>
 
@@ -89,23 +87,19 @@
           <h2 id="email"></h2>
           <table class="table">
             <thead>
-              <th>Email</th>
+                <th>Designer</th>
               <th>Category</th>
               <th>Dress Details</th>
               <th>Expected date</th>
               <th>Rate</th>
               <th>Title</th>
               <th>Type</th>
-              <th>Uid(Use this to search)</th>
               <th>Status</th>
             </thead>
             <tbody id="body1">
 
             </tbody>
           </table>
-
-
-
         </div>
       </div>
     </div>
@@ -138,7 +132,7 @@
 
   const dbRef = ref(getDatabase());
   var tbody = document.getElementById("body1")
-  function AddItemToTable(email, category, dress_details, expected_date, rate, title, type,uid,status) {
+  function AddItemToTable(designer, category, dress_details, expected_date, rate, title, type,status) {
     let trow = document.createElement("tr")
     let td1 = document.createElement("td");
     let td2 = document.createElement("td");
@@ -147,16 +141,15 @@
     let td5 = document.createElement("td");
     let td6 = document.createElement("td");
     let td7 = document.createElement("td");
-    let td8 = document.createElement("td");
+    
     let td9 = document.createElement("td");/*add ather data like this*/
-    td1.innerHTML = email
+    td1.innerHTML = designer
     td2.innerHTML = category
     td3.innerHTML = dress_details
     td4.innerHTML = expected_date
     td5.innerHTML = rate
     td6.innerHTML = title
     td7.innerHTML = type
-    td8.innerHTML = uid
     td9.innerHTML = status
     trow.appendChild(td1);
     trow.appendChild(td2);
@@ -165,14 +158,14 @@
     trow.appendChild(td5);
     trow.appendChild(td6);
     trow.appendChild(td7);
-    trow.appendChild(td8);
+   
     trow.appendChild(td9);/*add ather data like this*/
     tbody.appendChild(trow)/*no more needed*/
   }
   function AddAllItemsToTable(themail) {
     tbody.innerHTML = ""
     themail.forEach(element => {
-      AddItemToTable(element.email, element.category, element.dress_details, element.expected_date, element.rate, element.title, element.type,element.uid,element.status/*add ather data*/)
+      AddItemToTable(element.designer, element.category, element.dress_details, element.expected_date, element.rate, element.title, element.type,element.status/*add ather data*/)
     })
   }
   function GetAllDataOnce() {
