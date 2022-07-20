@@ -47,7 +47,7 @@
                       
                   <div class="col-lg-7">
                         
-                    <input type="email" placeholder="Email" class="form-control my-3 p-4">
+                    <input type="email" id="email" placeholder="Email" class="form-control my-3 p-4">
                   </div>
                 </div>
 
@@ -55,7 +55,7 @@
                       
                   <div class="col-lg-7">
                         
-                    <input type="password" placeholder="Password" class="form-control my-3 p-4">
+                    <input type="password" id="pass" placeholder="Password" class="form-control my-3 p-4">
                   </div>
                 </div>
 
@@ -63,14 +63,13 @@
                       
                   <div class="col-lg-7">
                         
-                    <button type="button" class="btn1 my-3"><a href="Des HomePage.html">Login</a></button>
+                    <button type="button" id="submit" class="btn1 my-3"><a href="Des HomePage.html">Login</a></button>
                   </div>
                 </div>                     
               </form>
 
               <div class="col-lg-7">
-                
-                <p><a href="">Forgot password?</a></p>
+              
                 <p>Need an account? <a href="Des Reg.html">Sign Up!</a></p> 
               </div> 
             </div>
@@ -112,15 +111,26 @@
     const analytics = getAnalytics(app);
 
     const auth = getAuth();
+    submit.addEventListener('click', (e) => {
+    var email = document.getElementById('email').value
+    var pass = document.getElementById('pass').value
+
     signInWithEmailAndPassword(auth, email, pass)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        // ...
+        location.href="Des HomePage.html"
       })
+
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorCode);
+        if (errorCode == 'auth/user-not-found')
+          alert("WRONG EMAIL")
+        else if(errorCode == 'auth/wrong-password')
+          alert('WRONG PASSWORD')
       });
+    })
   </script>
 </html>
