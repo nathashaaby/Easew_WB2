@@ -13,7 +13,7 @@
 }
 .cont
 {
-  margin-top: 150px;
+  margin-top: 100px;
 }
 .row
 {
@@ -88,4 +88,21 @@
   padding-left: 60px;
   padding-right: 60px;
   font-size: 30px;
+}
+#Photos
+{
+  background-color: transparent;
+}
+
+#success{
+  background-color: rgb(21, 175, 21);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+}
+#reject{
+  background-color: rgb(239, 43, 43);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
 }

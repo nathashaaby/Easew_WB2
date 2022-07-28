@@ -1,0 +1,26 @@
+ Common
+
+about -
+contact-
+
+
+Customer
+
+login Y
+sign up Y
+homepage Y
+send req Y
+req list(list of requests sent and their status- pending/completed) Y
+
+
+Designer
+
+login Y
+sign up Y
+homepage Y
+open reqs list(list of available requests to take on) Y
+view a req(when designer opens an open request) Y
+accepted req list(requests accepted and their status) Y
+
+
+

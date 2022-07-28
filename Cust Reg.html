@@ -28,7 +28,7 @@
     <a href="Index.html"><img class="logo" src="EASEW.png"></a>
   </nav>
 
-  <div class="container cont">
+  <div class="container" style="margin-top: 80px; margin-bottom: 40px;">
 
     <div class="row no-gutters align-items-center">
 
@@ -42,6 +42,8 @@
       </div>
 
       <div class="col">
+
+        <a href="Cust Login.html"><p class="font-weight-bold py-2">Back to Login</p></a>
 
         <h3><b>Enter your details</b></h3>
 
@@ -172,15 +174,16 @@
     if ((document.getElementById('phno').value.length) == 10) {
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
-        location.href = "Cust Login.html"
+        location.href="Cust Login.html"
         set(ref(database, 'users/' + user.uid), {
           email: email,
           name: document.getElementById('name').value,
           phno: document.getElementById('phno').value,
           address: document.getElementById('address').value
         })
+        alert('USER CREATED')
       })
-      alert('USER CREATED')
+      
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
