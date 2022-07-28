@@ -80,7 +80,7 @@
     <div id="Row" class="row">
 
       <input id="hai" style="display: none">
-
+      <input id="duid" style="display: none;">
       <div class="col p-4">
         
         <h4 id="email"></h4>
@@ -90,15 +90,15 @@
               <h2 id="email"></h2>
               <table class="table">
                 <thead>
-                  <th>Email</th>
+                  <th>Customer's Email</th>
                   <th>Category</th>
                   <th>Dress Details</th>
                   <th>Expected date</th>
                   <th>Rate</th>
                   <th>Title</th>
                   <th>Type</th>
-                  <th>Uid(Use this to search)</th>
                   <th>Status</th>
+                  <th>Phone Number</th>
                   <th>Accept/Reject</th>
                 </thead>
                 <tbody id="body1"></tbody>
@@ -116,7 +116,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
   import { getDatabase, set, ref, get, child,update } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
@@ -139,6 +139,7 @@
       const uid = user.email;
       const uuid = user.uid;
      document.getElementById("hai").value=user.email
+     document.getElementById("duid").value=user.uid
 
      console.log(uid);
      const dbRef = ref(getDatabase());
@@ -165,15 +166,25 @@
     let td7 = document.createElement("td");
     let td8 = document.createElement("td");
     let td9 = document.createElement("td");
+   
     let b1=document.createElement("button");
     b1.setAttribute("id", "success");
     b1.innerHTML = "accept";
     b1.onclick= function(){
       var mm=document.getElementById("hai").value
-    update(ref(db, 'users/' + uid), {
+      var des= document.getElementById("desc").value
+      console.log(des);
+      var desuid= document.getElementById("duid").value
+      console.log(des);
+      if(des=="" || des==" "){
+        alert("Contact Info required!")
+      }
+    else{
+      update(ref(db, 'users/' + uid), {
        designer:mm,
        status:"accepted by "+mm,
-       accept:"true"
+       accept:"true",
+       description: des
   });
   set(ref(db, 'req/' + uid), {
     designer:"HAI"
@@ -181,6 +192,7 @@
   });
   alert("REQUEST ACCEPTED")
   location.reload()
+    }
     }
     let b2=document.createElement("button");
     b2.setAttribute("id", "reject");
@@ -191,7 +203,8 @@
         update(ref(db, 'users/' + uid), {
        designer:"null",
        status:"rejected by "+mm,
-       accept:"false"
+       accept:"false",
+       description:"No contact info"
       
   });
   alert("REQUEST REJECTED")
@@ -203,6 +216,8 @@
       }
     
     }
+    let td10= document.createElement("input")
+    td10.setAttribute("id","desc")
     /*add ather data like this*/
     td1.innerHTML = email
     td2.innerHTML = category
@@ -211,7 +226,6 @@
     td5.innerHTML = rate
     td6.innerHTML = title
     td7.innerHTML = type
-    td8.innerHTML =uid
     td9.innerHTML =status
     trow.appendChild(td1);
     trow.appendChild(td2);
@@ -220,13 +234,16 @@
     trow.appendChild(td5);
     trow.appendChild(td6);
     trow.appendChild(td7);
-    trow.appendChild(td8);
     trow.appendChild(td9);
+  
+
     if(accept=="false")  
     trow.appendChild(b1);
     if(accept=="true")
     trow.appendChild(b2);/*add ather data like this*/
+    trow.appendChild(td10);
     tbody.appendChild(trow)/*no more needed*/
+
   }
   function AddAllItemsToTable(themail) {
     const mm=document.getElementById("hai").value
@@ -252,7 +269,18 @@
   window.onload = GetAllDataOnce;
 
 
-      // ...
+  signout.addEventListener('click', (e) => {
+    signOut(auth).then(() => {
+      location.href = "Des Login.html"
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+      alert(errorMessage)
+    });
+
+  })
 
 
 
