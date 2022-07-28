@@ -56,10 +56,6 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="./new_req.html" style="border-style: solid; border-radius: 25px; border-color: black;">SEARCH REQUESTS</a>
-      </li>
-
-      <li class="nav-item">
           <a class="nav-link" href="#" id="signout" style="border-style: solid; border-radius: 25px; border-color: black;">LOG OUT</a>
         </li>
         <li class="nav-item">
@@ -98,7 +94,8 @@
                   <th>Title</th>
                   <th>Type</th>
                   <th>Status</th>
-                  <th>Phone Number</th>
+                  <th>Reference Image</th>
+                  <th>Image Link</th>
                   <th>Accept/Reject</th>
                 </thead>
                 <tbody id="body1"></tbody>
@@ -166,7 +163,11 @@
     let td7 = document.createElement("td");
     let td8 = document.createElement("td");
     let td9 = document.createElement("td");
-   
+    let t10 = document.createElement("img");
+    let t11 = document.createElement("a");
+    t10.setAttribute("src","https://firebasestorage.googleapis.com/v0/b/easew-f8056.appspot.com/o/Reference_images%2F"+email+"?alt=media&token=3f542766-28e8-4fd8-9819-63a53420a53c");
+    t10.setAttribute("id","img1");
+    t11.setAttribute("href","https://firebasestorage.googleapis.com/v0/b/easew-f8056.appspot.com/o/Reference_images%2F"+email+"?alt=media&token=3f542766-28e8-4fd8-9819-63a53420a53c");
     let b1=document.createElement("button");
     b1.setAttribute("id", "success");
     b1.innerHTML = "accept";
@@ -216,8 +217,6 @@
       }
     
     }
-    let td10= document.createElement("input")
-    td10.setAttribute("id","desc")
     /*add ather data like this*/
     td1.innerHTML = email
     td2.innerHTML = category
@@ -227,6 +226,7 @@
     td6.innerHTML = title
     td7.innerHTML = type
     td9.innerHTML =status
+    t11.innerHTML = "https://firebasestorage.googleapis.com/v0/b/easew-f8056.appspot.com/o/Reference_images%2F"+email+"?alt=media&token=3f542766-28e8-4fd8-9819-63a53420a53c"
     trow.appendChild(td1);
     trow.appendChild(td2);
     trow.appendChild(td3);
@@ -235,13 +235,12 @@
     trow.appendChild(td6);
     trow.appendChild(td7);
     trow.appendChild(td9);
-  
-
+    trow.appendChild(t10);
+   trow.appendChild(t11);
     if(accept=="false")  
     trow.appendChild(b1);
     if(accept=="true")
     trow.appendChild(b2);/*add ather data like this*/
-    trow.appendChild(td10);
     tbody.appendChild(trow)/*no more needed*/
 
   }
@@ -285,5 +284,51 @@
 
 
 </script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
 
+  //BE SURE TO PROTECT EVERYTHING IN THE CONFIG
+  //DON'T COMMIT IT!!!
+
+  // Initialize Firebase
+  const Config = {
+    apiKey: "AIzaSyAeccx_CEqdaOkFGVPn7BdWyexIZZoB8KU",
+    authDomain: "easew-f8056.firebaseapp.com",
+    databaseURL: "https://easew-f8056-default-rtdb.firebaseio.com",
+    projectId: "easew-f8056",
+    storageBucket: "easew-f8056.appspot.com",
+    messagingSenderId: "677782385102",
+    appId: "1:677782385102:web:acb786b5badc3345d2bb9f",
+    measurementId: "G-JFNLZDG1HB"
+  };
+  firebase.initializeApp(Config);
+  var storage = firebase.storage();
+        var storageRef = storage.ref();
+        var mm= document.getElementById('hai').value;
+        var tangRef = storageRef.child('Reference_images/jittytresa@gmail.com');
+
+        tangRef.getDownloadURL().then(function(url) 
+        {
+            var test = url
+            console.log(url);
+            
+  
+        }).catch(function(error) 
+        {
+            switch (error.code) 
+            {
+                case 'storage/object_not_found':
+                    break;
+
+                case 'storage/unauthorized':
+                    break;
+
+                case 'storage/canceled':
+                    break;
+
+                case 'storage/unknown':
+                    break;
+            }
+        });
+</script>
 </html>
