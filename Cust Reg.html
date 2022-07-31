@@ -175,6 +175,7 @@
       createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         location.href="Cust Login.html"
+        console.log(user.uid);
         set(ref(database, 'users/' + user.uid), {
           email: email,
           name: document.getElementById('name').value,

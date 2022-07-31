@@ -177,7 +177,7 @@
 
             <div class="col">
 
-              <button id="request" type="button" class="btn1 my-5">POST REQUEST!</button>
+              <button id="request1" type="button" class="btn1 my-5">POST REQUEST!</button>
             </div>
           </div>
         </form>
@@ -245,9 +245,10 @@
       const uid = user.email;
       const uuid = user.uid;
       document.getElementById("user").value=uid
-      request.addEventListener('click', (e) => {
+      request1.addEventListener('click', (e) => {
         // Signed in
-        set(ref(database, 'users/' + uuid), {
+        console.log(uuid);
+        set(ref(database, `users"${uuid}"`), {
           title: document.getElementById('title').value,
           type: document.getElementById('choose').value,
           category: document.getElementById('category').value,
@@ -261,9 +262,9 @@
           phno: "null",
           accept: "false"
         })
-        alert('Request Send')
-
         location.href="Cust HomePage.html"
+
+        alert('Request Send')
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;

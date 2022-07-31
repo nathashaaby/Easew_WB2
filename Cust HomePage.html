@@ -86,14 +86,6 @@
 
 <script type="module">
 
-  $(document).ready(function () {
-    $('.dropdown-submenu a.test').on("click", function (e) {
-      $(this).next('ul').toggle();
-      e.stopPropagation();
-      e.preventDefault();
-    });
-  });
-
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
